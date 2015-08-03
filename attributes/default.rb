@@ -104,6 +104,8 @@ default["postgresql"]["initdb_options"]                  = "--locale=en_US.UTF-8
 # FILE LOCATIONS
 #------------------------------------------------------------------------------
 default["postgresql"]["data_directory"]                  = "/var/lib/postgresql/#{node["postgresql"]["version"]}/main"
+#FIXME
+default["postgresql"]["data_directory"]                  = "/var/lib/pgsql/#{node["postgresql"]["version"]}/data"
 default["postgresql"]["hba_file"]                        = "/etc/postgresql/#{node["postgresql"]["version"]}/main/pg_hba.conf"
 default["postgresql"]["ident_file"]                      = "/etc/postgresql/#{node["postgresql"]["version"]}/main/pg_ident.conf"
 default["postgresql"]["external_pid_file"]               = "/var/run/postgresql/#{node["postgresql"]["version"]}-main.pid"

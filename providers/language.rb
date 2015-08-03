@@ -77,17 +77,7 @@ def control_file_name_for_language(language)
 end
 
 def language_package_map  # rubocop:disable Metrics/MethodLength
-  {
-    "pllua" => "postgresql-#{pg_version}-pllua",
-    "plperl" => "postgresql-plperl-#{pg_version}",
-    "plproxy" => "postgresql-#{pg_version}-plproxy",
-    "plpython" => "postgresql-plpython-#{pg_version}",
-    "plpython3" => "postgresql-plpython3-#{pg_version}",
-    "plr" => "postgresql-#{pg_version}-plr",
-    "plsh" => "postgresql-#{pg_version}-plsh",
-    "pltcl" => "postgresql-pltcl-#{pg_version}",
-    "plv8" => "postgresql-#{pg_version}-plv8"
-  }
+  new_resource.lang_map
 end
 
 def pg_version

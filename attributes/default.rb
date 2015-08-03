@@ -52,6 +52,17 @@ default["postgresql"]["packages"] = {
       "postgis" => "postgresql-#{node["postgresql"]["version"]}-postgis-#{node["postgis"]["version"]}",
       "sqld"    => "postgresql-#{node["postgresql"]["version"]}",
       "dev"     => "postgresql-server-dev-#{node["postgresql"]["version"]}"
+    },
+    "lang" => {
+      "pllua"     => "postgresql-#{node["postgresql"]["version"]}-pllua",
+      "plperl"    => "postgresql-plperl-#{node["postgresql"]["version"]}",
+      "plproxy"   => "postgresql-#{node["postgresql"]["version"]}-plproxy",
+      "plpython"  => "postgresql-plpython-#{node["postgresql"]["version"]}",
+      "plpython3" => "postgresql-plpython3-#{node["postgresql"]["version"]}",
+      "plr"       => "postgresql-#{node["postgresql"]["version"]}-plr",
+      "plsh"      => "postgresql-#{node["postgresql"]["version"]}-plsh",
+      "pltcl"     => "postgresql-pltcl-#{node["postgresql"]["version"]}",
+      "plv8"      => "postgresql-#{node["postgresql"]["version"]}-plv8"
     }
   },
   "rhel" => {
@@ -63,6 +74,17 @@ default["postgresql"]["packages"] = {
       "postgis" => "postgis#{node["postgis"]["version"][0]}_#{node["postgresql"]["flat_version"]}",
       "sqld"    => "postgresql#{node["postgresql"]["flat_version"]}-server",
       "dev"     => "postgresql#{node["postgresql"]["flat_version"]}-devel"
+    },
+    "lang" => {
+      #"pllua"     => "lua-sql-postgresql", # required el
+      "plperl"    => "postgresql#{node["postgresql"]["flat_version"]}-plperl",
+      "plproxy"   => "plproxy#{node["postgresql"]["flat_version"]}",
+      "plpython"  => "postgresql#{node["postgresql"]["flat_version"]}-plpython",
+      #"plpython3"  => nil, # unsupported for now
+      #"plr"      => "plr#{node["postgresql"]["flat_version"]}", # requires libR.so
+      "plsh"      => "plsh#{node["postgresql"]["flat_version"]}",
+      "pltcl"     => "postgresql#{node["postgresql"]["flat_version"]}-pltcl"
+      #"plv8"     => "plv8_#{node["postgresql"]["flat_version"]}" # requires libv8.so.3
     }
   }
 }

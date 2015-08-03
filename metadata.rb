@@ -8,6 +8,7 @@ version          "0.16.1"
 
 recipe "postgresql",                   "Set up the apt repository and install dependent packages"
 recipe "postgresql::apt_repository",   "Internal recipe to setup the apt repository"
+recipe "postgresql::yum_repository",   "Internal recipe to setup the yum repository"
 recipe "postgresql::client",           "Front-end programs for PostgreSQL 9.x"
 recipe "postgresql::configuration",    "Internal recipe to manage configuration files"
 recipe "postgresql::contrib",          "Additional facilities for PostgreSQL"
@@ -29,4 +30,5 @@ supports "ubuntu"
 supports "debian"
 
 depends "apt", ">= 2.6.1"
+depends "yum"
 suggests "minitest-handler"

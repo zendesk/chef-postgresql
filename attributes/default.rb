@@ -8,6 +8,7 @@
 #
 
 default["postgresql"]["version"]                         = "9.4"
+default["postgresql"]["flat_version"]                    = node["postgresql"]["version"].tr('.', '')
 
 #----------------------------------------------------------------------------
 # DAEMON CONTROL
@@ -25,6 +26,15 @@ default["postgresql"]["apt_repository"]   = "apt.postgresql.org"
 default["postgresql"]["apt_uri"]          = "http://apt.postgresql.org/pub/repos/apt"
 default["postgresql"]["apt_components"]   = ["main", node["postgresql"]["version"]]
 default["postgresql"]["apt_key"]          = "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+
+#------------------------------------------------------------------------------
+# YUM REPOSITORY
+#------------------------------------------------------------------------------
+
+default["postgresql"]["yum_repository"]   = "yum.postgresql.org"
+default["postgresql"]["yum_baseurl"]      = "http://yum.postgresql.org/#{node["postgresql"]["version"]}/redhat/rhel-7-x86_64/"
+default["postgresql"]["yum_description"]  = "Postgresql (pinned to #{node["postgresql"]["version"]})"
+default["postgresql"]["yum_gpgkey"]       = "http://yum.postgresql.org/RPM-GPG-KEY-PGDG"
 
 default["postgresql"]["environment_variables"]           = {}
 default["postgresql"]["pg_ctl_options"]                  = ""

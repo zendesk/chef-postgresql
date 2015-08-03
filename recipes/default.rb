@@ -3,13 +3,6 @@
 # Recipe:: default
 #
 
-# pin default package preferences
-apt_preference "pgdg" do
-  glob "*"
-  pin "release o=apt.postgresql.org"
-  pin_priority "750"
-end
-
 case node["platform"]
 when "ubuntu"
   include_recipe "postgresql::apt_repository"
@@ -17,4 +10,6 @@ when "ubuntu"
 when "debian"
   include_recipe "postgresql::debian_backports"
   include_recipe "postgresql::apt_repository"
+when "rhel", "centos"
+  include_recipe "postgresql::yum_repository"
 end

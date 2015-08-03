@@ -12,7 +12,7 @@ action :create do
   unless @current_resource.exists
     converge_by "Create PostgreSQL Language #{new_resource.name}" do
       if language_package_needed?
-        package "postgresql-contrib-#{pg_version}"
+        package new_resource.contrib_pkg
         package language_package_map[new_resource.name]
       end
 

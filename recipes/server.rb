@@ -13,7 +13,7 @@ file "/usr/sbin/policy-rc.d" do
 end
 
 # install the package
-package "postgresql-#{node["postgresql"]["version"]}"
+package node["postgresql"]["packages"][node["platform_family"]]["pg"]["sqld"]
 
 # setup the data directory
 include_recipe "postgresql::data_directory"

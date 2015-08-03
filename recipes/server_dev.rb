@@ -6,4 +6,4 @@
 include_recipe "postgresql"
 
 # install the package
-package "postgresql-server-dev-#{node["postgresql"]["version"]}"
+package node["postgresql"]["packages"][node["platform_family"]]["pg"]["dev"]

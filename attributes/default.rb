@@ -10,6 +10,8 @@
 default["postgresql"]["version"]                         = "9.4"
 default["postgresql"]["flat_version"]                    = node["postgresql"]["version"].tr('.', '')
 
+default["postgis"]["version"]                            = "2.1"
+
 #----------------------------------------------------------------------------
 # DAEMON CONTROL
 #----------------------------------------------------------------------------
@@ -35,6 +37,35 @@ default["postgresql"]["yum_repository"]   = "yum.postgresql.org"
 default["postgresql"]["yum_baseurl"]      = "http://yum.postgresql.org/#{node["postgresql"]["version"]}/redhat/rhel-7-x86_64/"
 default["postgresql"]["yum_description"]  = "Postgresql (pinned to #{node["postgresql"]["version"]})"
 default["postgresql"]["yum_gpgkey"]       = "http://yum.postgresql.org/RPM-GPG-KEY-PGDG"
+
+#------------------------------------------------------------------------------
+# PACKAGE MAP
+#------------------------------------------------------------------------------
+
+default["postgresql"]["packages"] = {
+  "debian" => {
+    "pg" => {
+      "doc"     => "postgresql-doc-#{node["postgresql"]["version"]}",
+      "contrib" => "postgresql-contrib-#{node["postgresql"]["version"]}",
+      "client"  => "postgresql-client-#{node["postgresql"]["version"]}",
+      "dbg"     => "postgresql-#{node["postgresql"]["version"]}-dbg",
+      "postgis" => "postgresql-#{node["postgresql"]["version"]}-postgis-#{node["postgis"]["version"]}",
+      "sqld"    => "postgresql-#{node["postgresql"]["version"]}",
+      "dev"     => "postgresql-server-dev-#{node["postgresql"]["version"]}"
+    }
+  },
+  "rhel" => {
+    "pg" => {
+      "doc"     => "postgresql#{node["postgresql"]["flat_version"]}-docs",
+      "contrib" => "postgresql#{node["postgresql"]["flat_version"]}-contrib",
+      "client"  => "postgresql#{node["postgresql"]["flat_version"]}",
+      "dbg"     => "postgresql#{node["postgresql"]["flat_version"]}-devel",
+      "postgis" => "postgis#{node["postgis"]["version"][0]}_#{node["postgresql"]["flat_version"]}",
+      "sqld"    => "postgresql#{node["postgresql"]["flat_version"]}-server",
+      "dev"     => "postgresql#{node["postgresql"]["flat_version"]}-devel"
+    }
+  }
+}
 
 default["postgresql"]["environment_variables"]           = {}
 default["postgresql"]["pg_ctl_options"]                  = ""

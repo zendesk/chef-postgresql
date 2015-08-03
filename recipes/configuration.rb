@@ -12,13 +12,20 @@ directory "/etc/postgresql/#{pg_version}/main/" do
   recursive true
 end
 
+case node["platform_family"]
+when "debian"
+  service_pg = "postgresql"
+when "rhel"
+  service_pg = "postgresql-#{node["postgresql"]["version"]}"
+end
+
 # environment
 template "/etc/postgresql/#{pg_version}/main/environment" do
   source "environment.erb"
   owner  "postgres"
   group  "postgres"
   mode   "0644"
-  notifies restart_action, "service[postgresql]"
+  notifies restart_action, "service[#{service_pg}]"
 end
 
 # pg_ctl
@@ -27,7 +34,7 @@ template "/etc/postgresql/#{pg_version}/main/pg_ctl.conf" do
   owner  "postgres"
   group  "postgres"
   mode   "0644"
-  notifies restart_action, "service[postgresql]"
+  notifies restart_action, "service[#{service_pg}]"
 end
 
 # pg_hba
@@ -36,7 +43,7 @@ template node["postgresql"]["hba_file"] do
   owner  "postgres"
   group  "postgres"
   mode   "0640"
-  notifies :reload, "service[postgresql]"
+  notifies :reload, "service[#{service_pg}]"
   sensitive true
 end
 
@@ -46,7 +53,7 @@ template node["postgresql"]["ident_file"] do
   owner  "postgres"
   group  "postgres"
   mode   "0640"
-  notifies :reload, "service[postgresql]"
+  notifies :reload, "service[#{service_pg}]"
   sensitive true
 end
 
@@ -57,7 +64,7 @@ if node["postgresql"]["conf_custom"]
     owner  "postgres"
     group  "postgres"
     mode   "0644"
-    notifies restart_action, "service[postgresql]"
+    notifies restart_action, "service[#{service_pg}]"
   end
 else
   template "/etc/postgresql/#{pg_version}/main/postgresql.conf" do
@@ -65,7 +72,7 @@ else
     owner  "postgres"
     group  "postgres"
     mode   "0644"
-    notifies restart_action, "service[postgresql]"
+    notifies restart_action, "service[#{service_pg}]"
   end
 end
 
@@ -75,5 +82,5 @@ template "/etc/postgresql/#{pg_version}/main/start.conf" do # ~FC037 variable ok
   owner  "postgres"
   group  "postgres"
   mode   "0644"
-  notifies restart_action, "service[postgresql]", :immediately
+  notifies restart_action, "service[#{service_pg}]", :immediately
 end

@@ -5,11 +5,14 @@
 
 include_recipe "postgresql"
 
-# don't auto-start the service to allow custom configuration
-file "/usr/sbin/policy-rc.d" do
-  mode "0755"
-  content("#!/bin/sh\nexit 101\n")
-  not_if "pgrep postgres"
+# rhel family defaults to service off on install/update
+if node["platform_family"].eql? "debian" then
+  # don't auto-start the service to allow custom configuration
+  file "/usr/sbin/policy-rc.d" do
+    mode "0755"
+    content("#!/bin/sh\nexit 101\n")
+    not_if "pgrep postgres"
+  end
 end
 
 # install the package
